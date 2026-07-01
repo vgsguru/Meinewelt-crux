@@ -1,0 +1,17 @@
+# Fixes the "missing ScriptRunContext" / torch.classes watcher spam you saw on startup:
+# Streamlit's default watcher walks torch internals and floods warnings. Turn it off.
+[server]
+fileWatcherType = "none"
+headless = true
+
+[browser]
+gatherUsageStats = false
+
+# Crux brand theme (mirrors the web app: near-white bg, near-black primary, Space Grotesk).
+[theme]
+base = "light"
+primaryColor = "#1C1C1C"
+backgroundColor = "#FCFCFC"
+secondaryBackgroundColor = "#F4F4F5"
+textColor = "#1C1C1C"
+font = "sans serif"

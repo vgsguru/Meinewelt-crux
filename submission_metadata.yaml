@@ -1,0 +1,71 @@
+# Redrob Hackathon — Submission Metadata  (India Runs: Candidate Discovery & Ranking)
+# FILL IN the team identity fields marked TODO before submitting.
+
+team_name: "Crux"
+
+primary_contact:
+  name: "Guru Sanjeeth"
+  email: "gurusanjeeth@gmail.com"
+  phone: "TODO-add-your-phone"   # <-- fill before submitting (used for top-N outreach)
+
+team_members:
+  - name: "Guru Sanjeeth"
+    email: "gurusanjeeth@gmail.com"
+    role: "ML / Full-stack"
+
+# ---------------------------------------------------------------------------
+# Code and reproducibility
+# ---------------------------------------------------------------------------
+github_repo: "https://github.com/vgsguru/Meinewelt-crux"
+sandbox_link: "https://crux-beta.vercel.app"   # Live demo. Offline sandbox: `streamlit run app.py` (app.py)
+reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+
+# ---------------------------------------------------------------------------
+# Compute environment
+# ---------------------------------------------------------------------------
+compute:
+  platform: "Windows 11, local CPU"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.14"
+  os: "Windows 11 Pro"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: false
+  pre_computation_time_minutes: 0
+
+# ---------------------------------------------------------------------------
+# AI tools declaration (transparency only)
+# ---------------------------------------------------------------------------
+ai_tools_used:
+  - "Claude"
+ai_usage_summary: |
+  Claude (Claude Code) was used for architecture discussion, code authoring, and review
+  of the ranking heuristics. NO candidate data was fed to any hosted LLM during the ranking
+  step — rank.py is pure standard-library classical IR + rules and runs with the network off.
+
+# ---------------------------------------------------------------------------
+# Approach summary
+# ---------------------------------------------------------------------------
+methodology_summary: |
+  Constraint-compliant classical ranker (no network, CPU, ~80s for 100k). For each
+  candidate we build a text corpus weighted toward the CAREER-HISTORY NARRATIVE and score
+  it against a weighted JD capability lexicon (retrieval, embeddings, vector search,
+  ranking/recsys, NLP, ranking-evaluation) with BM25-style term saturation — so capability
+  is inferred from what people *built*, not from skill tags. That base is modulated by an
+  experience-band fit (5-9 ideal), a title gate that penalizes keyword-stuffer traps
+  (AI-skilled "Marketing Manager" -> 0.35x), JD disqualifiers (services-only career,
+  CV/speech-without-NLP, research-without-production, LangChain-only), and a behavioral
+  availability modifier from Redrob signals (response rate, interview completion, recency,
+  open-to-work). Internally-impossible honeypot profiles are detected and zeroed so they
+  never reach the top-100. Scores are normalized non-increasing; ties broken by candidate_id.
+
+# ---------------------------------------------------------------------------
+# Declarations
+# ---------------------------------------------------------------------------
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true

@@ -1,0 +1,7 @@
+# Ranking step (rank.py) needs only numpy to read the pre-computed embeddings.
+# rank.py degrades to pure standard-library lexical+rules if embeddings are absent.
+numpy>=1.24
+
+# Pre-computation (precompute_embeddings.py) and the sandbox UI (app.py):
+sentence-transformers>=2.6
+streamlit>=1.30
