@@ -1,21 +1,26 @@
-# Redrob Hackathon — Submission Metadata  (India Runs: Candidate Discovery & Ranking)
-# FILL IN the team identity fields marked TODO before submitting.
-
-team_name: "Crux"
+team_name: "Meinewelt-Crux"
 
 primary_contact:
   name: "Guru Sanjeeth"
   email: "gurusanjeeth@gmail.com"
-  phone: "TODO-add-your-phone"   # <-- fill before submitting (used for top-N outreach)
+  phone: "8608486088" 
 
-team_members:
+team_members 1:
   - name: "Guru Sanjeeth"
     email: "gurusanjeeth@gmail.com"
     role: "ML / Full-stack"
 
-# ---------------------------------------------------------------------------
-# Code and reproducibility
-# ---------------------------------------------------------------------------
+team_members 2:
+  - name: "Hema Dheeksha"
+    email: "hemadheeksha2008@gmail.com"
+    role: "UI/UX designer"
+
+team_members 3:
+  - name: "Harini Nadar"
+    email: "harininadar27@gmail.com"
+    role: "Reseacher"
+
+
 github_repo: "https://github.com/vgsguru/Meinewelt-crux"
 sandbox_link: "https://crux-beta.vercel.app"   # Live demo. Offline sandbox: `streamlit run app.py` (app.py)
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
