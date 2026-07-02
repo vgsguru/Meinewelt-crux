@@ -12,3 +12,6 @@ jd_vec.npy
 __pycache__/
 *.pyc
 .streamlit/secrets.toml
+
+# Excel copies — the challenge only accepts .csv (xlsx is an auto-reject); keep local only
+*.xlsx
