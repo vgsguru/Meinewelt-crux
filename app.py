@@ -47,14 +47,17 @@ html, body, [class*="css"], .stApp { background:var(--bg); color:var(--fg); font
 #MainMenu, footer { visibility:hidden; }
 header[data-testid="stHeader"] { background:transparent; }
 header [data-testid="stToolbar"] { visibility:hidden; }
-/* Sidebar expand control (appears top-left when the sidebar is collapsed) —
-   force-visible and styled as a Crux pill so collapsing is always reversible. */
-[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"] {
-  visibility:visible !important; display:flex !important; align-items:center;
-  background:#fff; border:1px solid var(--border); border-radius:999px;
-  padding:.3rem .55rem; margin:.35rem 0 0 .35rem;
-  box-shadow:0 2px 12px rgba(0,0,0,.10); z-index:1000; }
-[data-testid="stSidebarCollapsedControl"] svg, [data-testid="collapsedControl"] svg { color:var(--fg); }
+/* The sidebar-EXPAND button (shown when the sidebar is collapsed) mounts INSIDE
+   stToolbar, which we hide above — visibility is re-overridable on descendants,
+   so bring just this button back and style it as a Crux pill. */
+[data-testid="stExpandSidebarButton"] {
+  visibility:visible !important;
+  background:#fff !important; border:1px solid var(--border) !important; border-radius:999px !important;
+  box-shadow:0 2px 12px rgba(0,0,0,.12); }
+[data-testid="stExpandSidebarButton"]:hover { background:#F1ECFB !important; }
+[data-testid="stExpandSidebarButton"] svg, [data-testid="stExpandSidebarButton"] span { color:var(--fg) !important; }
+/* Keep the in-sidebar collapse button always visible (default is hover-only). */
+[data-testid="stSidebarCollapseButton"] { visibility:visible !important; }
 [data-testid="stSidebar"] { background:#F7F7F9; border-right:1px solid var(--border); }
 [data-testid="stSidebar"] .block-container { padding-top:1.2rem; }
 h1,h2,h3,h4 { font-family:'Space Grotesk',ui-sans-serif,sans-serif !important; letter-spacing:-0.02em; font-weight:700; color:var(--fg); }
