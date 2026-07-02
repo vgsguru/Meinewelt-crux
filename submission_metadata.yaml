@@ -17,7 +17,7 @@ team_members:
     role: "Researcher"
 
 github_repo: "https://github.com/vgsguru/Meinewelt-crux"
-sandbox_link: "https://crux-beta.vercel.app"   # Live demo. Offline sandbox: `streamlit run app.py` (app.py)
+sandbox_link: "https://meinewelt-crux.streamlit.app"   # Hosted sandbox (app.py). Product demo: https://crux-beta.vercel.app
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
 
 # ---------------------------------------------------------------------------
