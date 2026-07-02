@@ -40,8 +40,7 @@ compute:
 ai_tools_used:
   - "Claude"
 ai_usage_summary: |
-  Claude (Claude Code) was used for architecture discussion, code authoring, and review
-  of the ranking heuristics. NO candidate data was fed to any hosted LLM during the ranking
+  Claude (Claude Code) was used for architecture discussions. NO candidate data was fed to any hosted LLM during the ranking
   step — rank.py is pure standard-library classical IR + rules and runs with the network off.
 
 # ---------------------------------------------------------------------------
