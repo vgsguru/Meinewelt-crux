@@ -40,24 +40,49 @@ st.set_page_config(page_title="Crux · Offline Candidate Ranker", page_icon="�
 CRUX_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
-:root { --fg:#1C1C1C; --muted:#6E6E6E; --border:rgba(28,28,28,.10); --bg:#FCFCFC; }
+:root { --fg:#1C1C1C; --muted:#6E6E6E; --border:rgba(28,28,28,.10); --bg:#FCFCFC; --accent:#7D45E0; }
 html, body, [class*="css"], .stApp { background:var(--bg); color:var(--fg); font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
-#MainMenu, footer, header [data-testid="stToolbar"] { visibility:hidden; }
+/* Hide Streamlit chrome we don't want — but KEEP the header itself, because the
+   sidebar's expand control lives there when the sidebar is collapsed. */
+#MainMenu, footer { visibility:hidden; }
+header[data-testid="stHeader"] { background:transparent; }
+header [data-testid="stToolbar"] { visibility:hidden; }
+/* Sidebar expand control (appears top-left when the sidebar is collapsed) —
+   force-visible and styled as a Crux pill so collapsing is always reversible. */
+[data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"] {
+  visibility:visible !important; display:flex !important; align-items:center;
+  background:#fff; border:1px solid var(--border); border-radius:999px;
+  padding:.3rem .55rem; margin:.35rem 0 0 .35rem;
+  box-shadow:0 2px 12px rgba(0,0,0,.10); z-index:1000; }
+[data-testid="stSidebarCollapsedControl"] svg, [data-testid="collapsedControl"] svg { color:var(--fg); }
+[data-testid="stSidebar"] { background:#F7F7F9; border-right:1px solid var(--border); }
+[data-testid="stSidebar"] .block-container { padding-top:1.2rem; }
 h1,h2,h3,h4 { font-family:'Space Grotesk',ui-sans-serif,sans-serif !important; letter-spacing:-0.02em; font-weight:700; color:var(--fg); }
 .crux-badge { display:inline-flex; align-items:center; gap:.5rem; background:rgba(28,28,28,.06); color:var(--fg);
   padding:.28rem .8rem; border-radius:999px; font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.12em; }
+.crux-badge.accent { background:rgba(125,69,224,.10); color:var(--accent); }
 .crux-card { background:#fff; border:1px solid var(--border); border-radius:1.25rem; padding:1.15rem 1.3rem;
   box-shadow:0 1px 2px rgba(0,0,0,.03), 0 8px 30px rgba(0,0,0,.04); }
 .crux-sub { color:var(--muted); font-size:.9rem; }
 /* pill buttons + inputs, Crux-style */
 .stButton>button, .stDownloadButton>button { background:var(--fg); color:#fff; border:none; border-radius:999px;
-  padding:.6rem 1.4rem; font-weight:600; font-family:'Space Grotesk',sans-serif; transition:transform .12s ease; }
-.stButton>button:hover, .stDownloadButton>button:hover { transform:scale(1.03); color:#fff; background:#000; }
+  padding:.6rem 1.4rem; font-weight:600; font-family:'Space Grotesk',sans-serif; transition:transform .12s ease, box-shadow .12s ease; }
+.stButton>button:hover, .stDownloadButton>button:hover { transform:scale(1.03); color:#fff; background:#000; box-shadow:0 8px 24px rgba(0,0,0,.18); }
 .stTextArea textarea, .stNumberInput input { border-radius:.9rem !important; border:1px solid var(--border) !important; }
-[data-testid="stFileUploaderDropzone"] { border-radius:1.1rem; border:1px dashed var(--border); background:#fff; }
+[data-testid="stFileUploaderDropzone"] { border-radius:1.1rem; border:1.5px dashed rgba(28,28,28,.22); background:#fff; transition:border-color .15s ease; }
+[data-testid="stFileUploaderDropzone"]:hover { border-color:var(--accent); }
 [data-testid="stDataFrame"] { border:1px solid var(--border); border-radius:1rem; overflow:hidden; }
+[data-testid="stMetric"] { background:#fff; border:1px solid var(--border); border-radius:1.1rem; padding:.8rem 1rem; }
+[data-testid="stMetricLabel"] { color:var(--muted); }
 .block-container { padding-top:2.2rem; max-width:1180px; }
 hr { border-color:var(--border); }
+/* Crux footer */
+.crux-footer { margin-top:3.2rem; padding:1.4rem 0 .6rem; border-top:1px solid var(--border);
+  display:flex; flex-wrap:wrap; gap:.4rem 1.5rem; align-items:center; justify-content:space-between; }
+.crux-footer .team { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1rem; color:var(--fg); }
+.crux-footer .members { color:var(--muted); font-size:.82rem; }
+.crux-footer .links a { color:var(--accent); font-weight:600; font-size:.82rem; text-decoration:none; margin-left:1.1rem; }
+.crux-footer .links a:hover { text-decoration:underline; }
 </style>
 """
 st.markdown(CRUX_CSS, unsafe_allow_html=True)
@@ -124,7 +149,8 @@ st.markdown(
     <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.2rem;">
       {'<img src="data:image/png;base64,'+lb+'" style="height:40px;width:auto;"/>' if lb else ''}
       <span style="font-family:'Space Grotesk';font-weight:700;font-size:1.9rem;letter-spacing:-.02em;">Crux</span>
-      <span class="crux-badge" style="margin-left:.4rem;">Offline Ranker</span>
+      <span class="crux-badge accent" style="margin-left:.4rem;">Offline Ranker</span>
+      <span class="crux-badge" title="No hosted LLM — runs fully on this machine">100% offline</span>
     </div>
     <p class="crux-sub" style="margin:.1rem 0 1.1rem;">India Runs · Intelligent Candidate Discovery &amp; Ranking —
     the constraint-compliant submission engine. CPU-only, <b>no hosted LLM</b>: local embeddings + classical IR + rules.</p>
@@ -168,14 +194,37 @@ if up is not None:
                 table.append({"rank": rk, "candidate_id": cid, "title": meta["title"],
                               "yoe": round(meta["yoe"], 1), "score": val, "reasoning": why})
                 csv_rows.append([cid, rk, f"{val:.4f}", why])
+            zeroed = sum(1 for s, _, _, _ in scored if s == 0.0)
+            m1, m2, m3, m4 = st.columns(4)
+            m1.metric("Candidates scored", f"{len(recs):,}")
+            m2.metric("Shortlisted", len(table))
+            m3.metric("Honeypots zeroed", zeroed)
+            m4.metric("Engine", "Hybrid" if use_emb else "Lexical")
             st.markdown(f"### Top {len(table)}")
             st.dataframe(table, use_container_width=True, hide_index=True)
             buf = io.StringIO(); w = csv.writer(buf)
             w.writerow(["candidate_id", "rank", "score", "reasoning"]); w.writerows(csv_rows)
             st.download_button("⬇  Download ranking CSV", buf.getvalue(), file_name="submission.csv", mime="text/csv")
-            zeroed = sum(1 for s, _, _, _ in scored if s == 0.0)
             if zeroed:
                 st.info(f"{zeroed} candidate(s) detected as honeypots / impossible profiles and forced out of contention.")
 else:
     st.markdown('<div class="crux-card crux-sub">Upload a file to begin. Nothing is sent anywhere — ranking runs locally on CPU.</div>',
                 unsafe_allow_html=True)
+
+# ----------------------------------------------------------------------------- footer
+st.markdown(
+    """
+    <div class="crux-footer">
+      <div>
+        <div class="team">Team Meinewelt-Crux</div>
+        <div class="members">Guru Sanjeeth — Team Lead · ML / Full-stack&nbsp;&nbsp;|&nbsp;&nbsp;Hema Dheeksha — UI/UX Designer&nbsp;&nbsp;|&nbsp;&nbsp;Harini Nadar — Researcher</div>
+      </div>
+      <div class="links">
+        <a href="https://github.com/vgsguru/Meinewelt-crux" target="_blank">GitHub</a>
+        <a href="https://crux-beta.vercel.app" target="_blank">Live platform</a>
+      </div>
+    </div>
+    <p class="crux-sub" style="font-size:.72rem;margin-top:.5rem;">Crux · India Runs — Intelligent Candidate Discovery &amp; Ranking. Built offline-first: no hosted LLM, CPU-only, your data never leaves this machine.</p>
+    """,
+    unsafe_allow_html=True,
+)
