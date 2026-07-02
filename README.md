@@ -1,6 +1,6 @@
 # Meinewelt-Crux — Data & Al Challenge : Intelligent Candidate Discovery
 
-**Test here :**https://meinewelt-crux.streamlit.app/
+**Test here**: https://meinewelt-crux.streamlit.app/
 
 A constraint-compliant, **offline** ranker for the **Senior AI Engineer — Founding Team** job
 description. It ranks the top 100 candidates from `candidates.jsonl` (100k pool) with grounded
