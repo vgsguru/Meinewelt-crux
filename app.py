@@ -6,11 +6,29 @@ A judge/organizer can upload a small candidate sample (.json array or .jsonl), e
 and get the same offline hybrid ranking the submission uses — then download the CSV. Runs entirely
 on CPU; the only model is a small LOCAL sentence-transformer (no hosted LLM).
 
-Run locally:   streamlit run app.py
+Run locally:   python app.py        (self-bootstraps Streamlit and opens your browser)
+               streamlit run app.py (equivalent)
 Deploy free:   Streamlit Community Cloud (repo main file: app.py)
 """
-import io, os, json, csv, base64
+import io, os, sys, json, csv, base64
 import streamlit as st
+
+# Self-bootstrap: if launched as plain `python app.py` (or double-clicked), there is no
+# Streamlit runtime yet — running the UI code "bare" only prints ScriptRunContext warnings.
+# Relaunch ourselves under `streamlit run` instead, with headless off so the browser opens.
+from streamlit import runtime
+if not runtime.exists():
+    from streamlit.web import cli as stcli
+    # Skip Streamlit's first-run email prompt (it blocks stdin before the server starts).
+    cred_dir = os.path.expanduser("~/.streamlit")
+    cred = os.path.join(cred_dir, "credentials.toml")
+    if not os.path.exists(cred):
+        os.makedirs(cred_dir, exist_ok=True)
+        with open(cred, "w", encoding="utf-8") as fh:
+            fh.write('[general]\nemail = ""\n')
+    headless = os.environ.get("STREAMLIT_SERVER_HEADLESS", "false")  # env wins (CI/tests)
+    sys.argv = ["streamlit", "run", os.path.abspath(__file__), f"--server.headless={headless}"]
+    sys.exit(stcli.main())
 
 import rank as R
 from precompute_embeddings import narrative, JD_QUERY

@@ -26,11 +26,17 @@ the embedding files are absent — so the ranking step always produces a valid C
 ## Try it live (sandbox)
 
 ```bash
-streamlit run app.py
+python app.py     # self-bootstraps the UI and opens your browser — no streamlit command needed
 ```
+
+On Windows you can simply **double-click `run_app.bat`** — it installs dependencies on first run
+and starts the app. (`streamlit run app.py` still works too.)
 
 Upload a candidate sample (`sample_candidates.json` or any slice of `candidates.jsonl`), edit the
 role, and get the same ranking with a downloadable CSV. Deployable free on Streamlit Community Cloud.
+
+> Note: the UI is optional — the actual ranking engine is the `rank.py` CLI, which has no UI
+> dependencies at all. First UI run downloads the small local MiniLM model (~90 MB) once.
 
 ## Why this design (per the challenge rules)
 

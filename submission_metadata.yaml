@@ -5,21 +5,16 @@ primary_contact:
   email: "gurusanjeeth@gmail.com"
   phone: "8608486088" 
 
-team_members 1:
+team_members:
   - name: "Guru Sanjeeth"
     email: "gurusanjeeth@gmail.com"
     role: "ML / Full-stack"
-
-team_members 2:
   - name: "Hema Dheeksha"
     email: "hemadheeksha2008@gmail.com"
     role: "UI/UX designer"
-
-team_members 3:
   - name: "Harini Nadar"
     email: "harininadar27@gmail.com"
-    role: "Reseacher"
-
+    role: "Researcher"
 
 github_repo: "https://github.com/vgsguru/Meinewelt-crux"
 sandbox_link: "https://crux-beta.vercel.app"   # Live demo. Offline sandbox: `streamlit run app.py` (app.py)
