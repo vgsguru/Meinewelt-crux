@@ -77,7 +77,7 @@ Output scores are normalized strictly non-increasing by rank; ties broken by `ca
 | `submission_metadata.yaml` | Portal metadata mirror. |
 
 ## Relationship to the Crux web app(For Ideathon-Track-3)
-
+The streamlit live version (https://meinewelt-crux.streamlit.app/)
 The live product (https://crux-beta.vercel.app → Recruiter → **Talent Discovery**) is the interactive
 demo. It uses an LLM re-rank for interactive polish, which is fine for a demo but is **not** the
 competition path — the offline `rank.py` here is the constraint-compliant engine, and `app.py` is its
