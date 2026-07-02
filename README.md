@@ -70,7 +70,7 @@ Output scores are normalized strictly non-increasing by rank; ties broken by `ca
 | `validate_submission.py` | Official challenge validator (bundled for convenience). |
 | `submission_metadata.yaml` | Portal metadata mirror. |
 
-## Relationship to the Crux web app
+## Relationship to the Crux web app(For Ideathon-Track-3)
 
 The live product (https://crux-beta.vercel.app → Recruiter → **Talent Discovery**) is the interactive
 demo. It uses an LLM re-rank for interactive polish, which is fine for a demo but is **not** the
